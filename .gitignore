@@ -102,3 +102,11 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# data
+data
+
+# ide
+.idea
+.vscode
+.sonarlint

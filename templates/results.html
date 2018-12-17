@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ algorithm }} for {{ target }}
+{% endblock %}
+{% block content %}
+    <div class="w3-container w3-white">
+        <h2 style="text-shadow:1px 1px 0 #444">{{ limit }} recommendations were provided by {{ algorithm }} for article
+            #{{ target }}</h2>
+    </div>
+    <div>
+        <div class="w3-container w3-white">
+            <div align="center"  class="w3-light-grey w3-round-xlarge">
+                <h4>Target</h4>
+                <p>
+                    ID: {{ target_article.id }}
+                </p>
+                <p>
+                    Title: "{{ target_article.title }}"
+                </p>
+                {% if target_article.abstract %}
+                    <p>
+                        Abstract: "{{ target_article.abstract }}"
+                    </p>
+                {% endif %}
+                <a href="/recommend/{{ target_article.id }}?algorithm=bow"
+                   class="w3-bar-item w3-button w3-right">BoW</a>
+                <a href="/recommend/{{ target_article.id }}?algorithm=tfidf"
+                   class="w3-bar-item w3-button w3-right">TF-IDF</a>
+                <a href="/recommend/{{ target_article.id }}?algorithm=doc2vec"
+                   class="w3-bar-item w3-button w3-right">Doc2Vec</a>
+            </div>
+        </div>
+    </div>
+    <div class="w3-panel">
+        Recommendations:
+        <ul class="w3-ul w3-border w3-card-4">
+            {% for item in recommendations %}
+                <li>
+                    <div class="w3-bar w3-border w3-light-grey w3-round-xlarge">
+                        <div class="w3-bar-item">
+                            <p>
+                                Score: {{ item.score }}%
+                            </p>
+                            <p>
+                                ID: {{ item.article.id }}
+                            </p>
+                            <p>
+                                Title: "{{ item.article.title }}"
+                            </p>
+                            {% if item.article.abstract %}
+                                <p>
+                                    Abstract: "{{ item.article.abstract }}"
+                                </p>
+                            {% endif %}
+                        </div>
+                        <a href="/recommend/{{ item.article.id }}?algorithm=bow"
+                           class="w3-bar-item w3-button w3-right">BoW</a>
+                        <a href="/recommend/{{ item.article.id }}?algorithm=tfidf"
+                           class="w3-bar-item w3-button w3-right">TF-IDF</a>
+                        <a href="/recommend/{{ item.article.id }}?algorithm=doc2vec"
+                           class="w3-bar-item w3-button w3-right">Doc2Vec</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

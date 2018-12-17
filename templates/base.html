@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}
+            {% endblock %}
+        </title>
+        <link rel="stylesheet" href="/static/css/w3.css">
+    {% endblock %}
+</head>
+<body>
+<div class="w3-container">
+    <div id="nav" class="w3-container">
+        {% block nav %}
+            <div class="w3-bar w3-border w3-light-grey w3-round-xlarge">
+                <a href="/"
+                   class="w3-bar-item w3-button w3-hover-none w3-border-light-gray w3-bottombar w3-hover-border-black">Recommender</a>
+            </div>
+            </div>
+        {% endblock %}
+</div>
+<div id="content">
+    {% block content %}
+    {% endblock %}
+</div>
+</div>
+</body>
+</html>

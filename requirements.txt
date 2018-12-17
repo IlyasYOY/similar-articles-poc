@@ -1,0 +1,9 @@
+cython
+flask
+scipy
+numpy
+scikit-learn
+nltk
+gensim
+spacy
+textacy

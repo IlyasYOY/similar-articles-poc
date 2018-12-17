@@ -1,0 +1,4 @@
+{
+    "test-data-path": "data/test.json",
+    "chunk-size": 1000
+}

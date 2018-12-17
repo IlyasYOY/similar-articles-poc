@@ -15,7 +15,7 @@ with open('settings.json') as file:
 
 DATA_PATH = config.get('test-data-path')
 D2V_VECTORS = DATA_PATH + '.d2v.vectors'
-VECTORS_PATH = 'data/glove.w2v.6B.300d.txt'
+VECTORS_PATH = config.get('vectors-path')
 CHUNK_SIZE = config.get('chunk-size', 1000)
 
 logging.basicConfig(level=logging.INFO)

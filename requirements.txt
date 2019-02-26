@@ -7,3 +7,4 @@ nltk
 gensim
 spacy
 textacy
+networkx

@@ -40,10 +40,23 @@
                 <div class="w3-dropdown-hover w3-light-grey">
                     Doc2Vec
                     <div class="w3-dropdown-content w3-card-4" style="width: 50em">
-                        <img src="/static/img/doc2vec.png" alt="TF-IDF" style="width:100%"/>
+                        <img src="/static/img/doc2vec.png" alt="doc2vec" style="width:100%"/>
                         <p>Doc2Vec</p>
                         <p>Doc2vec is an unsupervised algorithm to generate vectors for sentence/paragraphs/documents.
                             The algorithm is an adaptation of word2vec which can generate vectors for words.</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="w3-dropdown-hover w3-light-grey">
+                    WMD
+                    <div class="w3-dropdown-content w3-card-4" style="width: 50em">
+                        <img src="/static/img/wmd.png" alt="wmd" style="width:100%"/>
+                        <p>WMD</p>
+                        <p>WMD is a method that allows us to assess the "distance" between two documents in a meaningful
+                            way, even when they have no words in common. It uses word2vec vector embeddings of
+                            words. It been shown to outperform many of the state-of-the-art methods in k-nearest
+                            neighbors classification</p>
                     </div>
                 </div>
             </li>
@@ -67,6 +80,8 @@
                                 </p>
                             {% endif %}
                         </div>
+                        <a href="/recommend/{{ article.id }}?algorithm=wmd"
+                           class="w3-bar-item w3-button w3-right">WMD</a>
                         <a href="/recommend/{{ article.id }}?algorithm=bow"
                            class="w3-bar-item w3-button w3-right">BoW</a>
                         <a href="/recommend/{{ article.id }}?algorithm=tfidf"

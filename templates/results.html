@@ -10,7 +10,7 @@
     </div>
     <div>
         <div class="w3-container w3-white">
-            <div align="center"  class="w3-light-grey w3-round-xlarge">
+            <div align="center" class="w3-light-grey w3-round-xlarge">
                 <h4>Target</h4>
                 <p>
                     ID: {{ target_article.id }}
@@ -23,6 +23,8 @@
                         Abstract: "{{ target_article.abstract }}"
                     </p>
                 {% endif %}
+                <a href="/recommend/{{ target_article.id }}?algorithm=wmd"
+                   class="w3-bar-item w3-button w3-right">WMD</a>
                 <a href="/recommend/{{ target_article.id }}?algorithm=bow"
                    class="w3-bar-item w3-button w3-right">BoW</a>
                 <a href="/recommend/{{ target_article.id }}?algorithm=tfidf"
@@ -54,6 +56,8 @@
                                 </p>
                             {% endif %}
                         </div>
+                        <a href="/recommend/{{ item.article.id }}?algorithm=wmd"
+                           class="w3-bar-item w3-button w3-right">WMD</a>
                         <a href="/recommend/{{ item.article.id }}?algorithm=bow"
                            class="w3-bar-item w3-button w3-right">BoW</a>
                         <a href="/recommend/{{ item.article.id }}?algorithm=tfidf"

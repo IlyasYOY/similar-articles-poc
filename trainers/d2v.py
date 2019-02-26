@@ -29,7 +29,8 @@ finally:
     STOPWORDS = set(stopwords.words('english'))
 log.info('Stopwords were loaded...')
 log.info('Loading model from: %s...', VECTORS_PATH)
-model = KeyedVectors.load_word2vec_format(VECTORS_PATH)
+model: KeyedVectors = KeyedVectors.load_word2vec_format(VECTORS_PATH)
+model.init_sims(replace=True)
 log.info('Model was loaded from: %s...', VECTORS_PATH)
 
 
@@ -76,7 +77,7 @@ def iter_text(filename):
 
 def iter_id_with_text(filename):
     log.info('Loading spaCy model...')
-    nlp = spacy.load('en', disable=['ner', 'parser', 'tagger'])
+    nlp = spacy.load('en_core_web_sm', disable=['ner', 'parser', 'tagger'])
     log.info('SpaCy model was loaded...')
     with open(filename) as file:
         for index, article in enumerate(map(json.loads, file), 1):

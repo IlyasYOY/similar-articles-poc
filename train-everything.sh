@@ -14,3 +14,6 @@ echo "Running d2v.py..."
 
 echo "Running shelver.py..."
 ./.venv/bin/python trainers/shelver.py
+
+echo "Running wmd.py"
+./.venv/bin/python trainers\wmd.py

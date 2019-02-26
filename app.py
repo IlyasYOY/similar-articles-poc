@@ -1,13 +1,12 @@
 import functools
 import json
 import logging
-import math
+import os
 import pickle
 import shelve
-import os
 
-import numpy
-from flask import Flask, redirect, render_template, request, url_for, send_from_directory
+import networkx as nx
+from flask import Flask, render_template, request, send_from_directory
 from scipy.sparse import csr_matrix
 
 logging.basicConfig(level=logging.INFO)
@@ -20,6 +19,7 @@ DOC2VEC_DATA = config.get('test-data-path') + '.d2v.vectors'
 BOW_DATA = config.get('test-data-path') + '.bow.vectors'
 TFIDF_DATA = config.get('test-data-path') + '.tfidf.vectors'
 SHELVE_DATA = config.get('test-data-path') + '.shelve'
+WMD_DATA = config.get('test-citations-data-path') + '.graph.gml'
 
 with open(DOC2VEC_DATA, 'rb') as file:
     log.info('Loading Doc2vec data from %s...', DOC2VEC_DATA)
@@ -32,7 +32,9 @@ with open(BOW_DATA, 'rb') as file:
 with open(TFIDF_DATA, 'rb') as file:
     log.info('Loading TF-IDF data from %s...', TFIDF_DATA)
     app.tfidf: csr_matrix = pickle.load(file)
-    log.info('TF-IDF data were loaded...')
+log.info('Loading WMD data from %s...', WMD_DATA)
+graph: nx.MultiGraph = nx.read_gml(WMD_DATA)
+log.info('WMD data were loaded...')
 
 
 @app.route('/')
@@ -67,7 +69,7 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-    
+
 @functools.lru_cache(maxsize=10)
 def recommend_with_algorithm(target, limit, algorithm):
     if algorithm == 'tfidf':
@@ -76,8 +78,16 @@ def recommend_with_algorithm(target, limit, algorithm):
         table = app.bow
     elif algorithm == 'doc2vec':
         table = app.doc2vec
+    elif algorithm == 'wmd':
+        try:
+            data = sorted(
+                nx.single_source_dijkstra_path_length(graph, str(target), weight='distance', cutoff=10).items(),
+                key=lambda x: x[1])[:limit]
+        except nx.NodeNotFound:
+            return [(target, 0.0)]
+        return data
     else:
-        return None
+        return [(target, 0.0)]
     return recommend_algorithm(table, target, limit)
 
 

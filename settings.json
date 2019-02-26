@@ -1,5 +1,6 @@
 {
     "test-data-path": "data/test.json",
+  "test-citations-data-path": "data/citations.json",
     "chunk-size": 1000,
     "vectors-path": "data/glove.w2v.6B.300d.txt"
 }

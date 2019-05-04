@@ -7,8 +7,6 @@ import progressbar
 import spacy
 import textacy
 from gensim.models import KeyedVectors
-from nltk import download
-from nltk.corpus import stopwords
 
 with open('settings.json') as file:
     config = json.load(file)
@@ -19,14 +17,6 @@ VECTORS_PATH = config.get('vectors-path')
 CHUNK_SIZE = config.get('chunk-size', 1000)
 
 log = logging.getLogger(__name__)
-log.info('Loading stopwords...')
-try:
-    stopwords.words('english')
-except LookupError:
-    download('stopwords')
-finally:
-    STOPWORDS = set(stopwords.words('english'))
-log.info('Stopwords were loaded...')
 log.info('Loading model from: %s...', VECTORS_PATH)
 model: KeyedVectors = KeyedVectors.load_word2vec_format(VECTORS_PATH)
 model.init_sims(replace=True)
@@ -39,7 +29,6 @@ def main():
     log.info('SpaCy model was loaded...')
     graph = nx.MultiGraph()
     with open(DATA_PATH) as file, shelve.open('data/test.json.shelve') as db, progressbar.ProgressBar() as progress:
-        citation: dict
         for index, citation in enumerate(map(json.loads, file), 1):
             from_index = citation.get('from')
             from_article = db.get(str(from_index))
